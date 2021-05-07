@@ -2,7 +2,6 @@ package com.leaning.spring.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.leaning.spring.domain.SpeakerDomain;
 import com.leaning.spring.models.Speaker;
 import com.leaning.spring.repositories.SpeakerRepository;
+import com.leaning.spring.services.SpeakerService;
 
 @RestController
 @RequestMapping("/api/v1/speakers")
@@ -21,10 +22,18 @@ public class SpeakerController {
 	@Autowired
 	private SpeakerRepository speakerRipository;
 	
+	@Autowired
+	private SpeakerService speakerService;
+	
+//	@GetMapping
+//	public List<Speaker> list() {
+//		return speakerRipository.findAll();
+//
+//	}
+	
 	@GetMapping
-	public List<Speaker> list() {
-		return speakerRipository.findAll();
-		
+	public List<SpeakerDomain> getAllSpeakers(){
+		return speakerService.getSpeakers();
 	}
 	
 	@GetMapping
@@ -35,8 +44,8 @@ public class SpeakerController {
 	}
 	
 	@PostMapping
-	public Speaker create(@RequestBody Speaker speaker) {
-		return speakerRipository.saveAndFlush(speaker);
+	public SpeakerDomain create(@RequestBody SpeakerDomain speakerDomain) {
+		return speakerService.postSpeaker(speakerDomain);
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
@@ -44,13 +53,10 @@ public class SpeakerController {
 		speakerRipository.deleteById(id);
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
+	@RequestMapping(method=RequestMethod.PUT)
+	public SpeakerDomain update(@RequestBody SpeakerDomain speakerDomain) {
 		
-		Speaker existingSpeaker = speakerRipository.getOne(id);
-		BeanUtils.copyProperties(speaker, existingSpeaker, "session_id");
-		return speakerRipository.saveAndFlush(existingSpeaker);
-		
+		return speakerService.putSpeaker(speakerDomain);
 	}
 
 }
