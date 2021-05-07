@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/")
 public class HomeController {
 	
-	@Value("${app.version}")
-	private String appVersion;
+//	@Value("${app.version}")
+//	private String appVersion;
 	
 	@GetMapping
-	public Map<String, String> getVersion() {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("app-version", appVersion);
+	public Map<String, Integer> getVersion(int a, int b) {
+	
+		int c = a+b;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("app-version", c);
 		return map;
 		
 	}
