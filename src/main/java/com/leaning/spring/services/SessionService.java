@@ -1,7 +1,13 @@
 package com.leaning.spring.services;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -182,6 +188,57 @@ public class SessionService {
 		userData.setWorkshopDetails(workshopNamesList);
 		return userData;
 	}
+
+	public TreeSet<String> getSessionNames() {
+		
+		TreeSet<String> sessionNames = new TreeSet<String>();
+		
+		List<Session> sessionList = sessionRepository.findAll();
+		for (Session session : sessionList) {
+			
+			sessionNames.add(session.getSession_name());
+			
+		}
+		//Collections.sort(sessionNames);
+		return sessionNames;
+	}
+
+	public List<Session> getCSVList() {
+		String path = "/Users/sasidharkoduru/Downloads/test.csv";
+		String line = "";
+		List<Session> sessionList = new ArrayList<Session>();
+		try {
+			BufferedReader fileReader = new BufferedReader(new FileReader(path));
+			
+			
+			int i =0;
+			while((line = fileReader.readLine()) != null){
+				if(i==0) {
+					i++;
+					continue;
+				}
+				
+				String[] values = line.split(",");
+			    Session session = new Session();
+			    session.setSession_id(Long.parseLong(values[0]));
+			    session.setSession_name(values[1]);
+			    session.setSession_description(values[2]);
+			    session.setSession_length(Integer.valueOf(values[3]));
+			    sessionList.add(session);
+			    }
+			//return sessionList;
+		}
+		 catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return sessionList;
+	}
+	//return sessionList;
+	
 }
 
 
