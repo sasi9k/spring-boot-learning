@@ -2,6 +2,7 @@ package com.leaning.spring.models;
 
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,37 +20,44 @@ public class Session {
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long session_id;
-	private String session_name;
-	private String session_description;
-	private Integer session_length;
+	@Column(name="session_id")
+	private Long sessionId;
+	
+	@Column(name="session_name")
+	private String sessionName;
+	
+	@Column(name="session_description")
+	private String sessionDescription;
+	
+	@Column(name="session_length")
+	private Integer sessionLength;
 	
 	
 	
 	
 	public Long getSession_id() {
-		return session_id;
+		return sessionId;
 	}
 	public void setSession_id(Long session_id) {
-		this.session_id = session_id;
+		this.sessionId = session_id;
 	}
 	public String getSession_name() {
-		return session_name;
+		return sessionName;
 	}
 	public void setSession_name(String session_name) {
-		this.session_name = session_name;
+		this.sessionName = session_name;
 	}
 	public String getSession_description() {
-		return session_description;
+		return sessionDescription;
 	}
 	public void setSession_description(String session_description) {
-		this.session_description = session_description;
+		this.sessionDescription = session_description;
 	}
 	public Integer getSession_length() {
-		return session_length;
+		return sessionLength;
 	}
 	public void setSession_length(Integer session_length) {
-		this.session_length = session_length;
+		this.sessionLength = session_length;
 	}
 	
 
