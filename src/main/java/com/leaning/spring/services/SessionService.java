@@ -1,17 +1,25 @@
 package com.leaning.spring.services;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leaning.spring.domain.SessionDomain;
 import com.leaning.spring.domain.SpeakerDomain;
 import com.leaning.spring.models.UserData;
@@ -226,7 +234,7 @@ public class SessionService {
 			    session.setSession_length(Integer.valueOf(values[3]));
 			    sessionList.add(session);
 			    }
-			//return sessionList;
+			
 		}
 		 catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -237,7 +245,22 @@ public class SessionService {
 		
 		return sessionList;
 	}
-	//return sessionList;
+	
+
+	public List<Session> getXMLList() {
+		
+		try {
+			File file = new File("/Users/sasidharkoduru/Downloads/test.csv.xml");
+			DocumentBuilderFactory fact =DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder =fact.newDocumentBuilder();
+			Document doc = builder.parse("/Users/sasidharkoduru/Downloads/test.csv.xml");
+			doc.getDocumentElement().normalize();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
 

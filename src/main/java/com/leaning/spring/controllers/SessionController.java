@@ -164,5 +164,11 @@ public class SessionController {
 	public List<Session> getSessionCSVList(){
 		return sessionService.getCSVList();
 	}
+	@GetMapping
+	@RequestMapping("/XMLList")
+	public List<Session> getSessionXMLList(){
+		return sessionService.getXMLList();
+	}
+	
 }
 
